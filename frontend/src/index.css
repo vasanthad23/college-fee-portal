@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-100 text-gray-900;
+    font-family: 'Inter', sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #c4b5fd;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #7c3aed;
+  }
+}
+
+@layer components {
+  /* Sidebar styles */
+  .sidebar-nav-item {
+    @apply flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 cursor-pointer;
+    color: #a0a4b8;
+  }
+  .sidebar-nav-item:hover {
+    background: #252840;
+    color: #ffffff;
+  }
+  .sidebar-nav-item.active {
+    background: #252840;
+    color: #ffffff;
+    border-left: 3px solid #7c3aed;
+  }
+  .sidebar-nav-item.active svg {
+    color: #7c3aed;
+  }
+
+  /* Stat cards */
+  .stat-card {
+    @apply bg-white rounded-2xl p-5 shadow-sm border border-gray-100;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  }
+
+  /* Data table */
+  .data-table th {
+    @apply px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50;
+  }
+  .data-table td {
+    @apply px-4 py-3 text-sm text-gray-700;
+  }
+  .data-table tr:hover td {
+    background: #f9f8ff;
+  }
+
+  /* Status badges */
+  .badge-green {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700;
+  }
+  .badge-red {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-700;
+  }
+  .badge-yellow {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700;
+  }
+  .badge-blue {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-medium rounded-lg shadow-sm transition-all duration-200;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-lg shadow-sm border border-gray-200 transition-all duration-200;
+  }
+
+  /* Search input */
+  .search-input {
+    @apply block w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-400 transition-all;
+  }
+
+  /* Card */
+  .card {
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden;
+  }
+}

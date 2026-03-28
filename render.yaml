@@ -1,0 +1,28 @@
+services:
+  # Backend service
+  - type: web
+    name: college-fee-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && node server.js
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        value: https://college-fee-frontend.onrender.com
+      - key: PORT
+        value: 5000
+
+  # Frontend service
+  - type: static
+    name: college-fee-frontend
+    env: static
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://college-fee-backend.onrender.com/api

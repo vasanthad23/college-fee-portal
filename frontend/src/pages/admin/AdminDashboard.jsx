@@ -137,7 +137,7 @@ export default function AdminDashboard() {
                                         onMouseEnter={e => e.currentTarget.style.background = '#faf8ff'}
                                         onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
                                         <td style={{ padding: '10px 12px', fontSize: '13px', color: '#7c3aed', fontWeight: 600 }}>#{p._id?.slice(-6).toUpperCase()}</td>
-                                        <td style={{ padding: '10px 12px', fontSize: '13px', color: '#374151', fontWeight: 500 }}>{p.studentId?.user?.name || 'N/A'}</td>
+                                        <td style={{ padding: '10px 12px', fontSize: '13px', color: '#374151', fontWeight: 500 }}>{p.studentId?.user?.name || <span style={{ color: '#9ca3af' }}>Unknown Student</span>}</td>
                                         <td style={{ padding: '10px 12px', fontSize: '13px', color: '#6b7280' }}>{p.paymentDate ? new Date(p.paymentDate).toLocaleDateString('en-IN') : '—'}</td>
                                         <td style={{ padding: '10px 12px', fontSize: '13px', color: '#111827', fontWeight: 600 }}>₹{(p.amountPaid || 0).toLocaleString('en-IN')}</td>
                                         <td style={{ padding: '10px 12px' }}>

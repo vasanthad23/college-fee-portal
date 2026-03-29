@@ -55,7 +55,7 @@ export default function StudentDashboard() {
                     totalFee,
                     paid: totalPaid,
                     outstanding: Math.max(0, outstanding),
-                    nextDueDate: nextDue?.dueDate ? new Date(nextDue.dueDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : 'N/A',
+                    nextDueDate: nextDue?.dueDate ? new Date(nextDue.dueDate).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : 'No Pending Due',
                     nextInstallmentAmount: nextDue ? (totalFee * nextDue.amountPercentage) / 100 : outstanding,
                 });
                 setPayments(paidList.slice(0, 5));
@@ -131,7 +131,7 @@ export default function StudentDashboard() {
                     { label: 'Total Fees', value: loading ? '—' : fmt(totalFee), icon: '📋', bg: '#eff6ff', color: '#1e3a8a' },
                     { label: 'Due Amount', value: loading ? '—' : fmt(outstanding), icon: '⚠️', bg: '#fef3c7', color: '#92400e' },
                     { label: 'Amount Paid', value: loading ? '—' : fmt(paid), icon: '✅', bg: '#f0fdf4', color: '#14532d' },
-                    { label: 'Next Due Date', value: loading ? '—' : studentData?.nextDueDate || 'N/A', icon: '📅', bg: '#faf5ff', color: '#6d28d9' },
+                    { label: 'Next Due Date', value: loading ? '—' : studentData?.nextDueDate || '—', icon: '📅', bg: '#faf5ff', color: '#6d28d9' },
                 ].map((card) => (
                     <div key={card.label} style={{
                         flex: 1, minWidth: '160px',

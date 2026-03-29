@@ -308,10 +308,10 @@ export default function StudentList() {
                                         {student.rollNumber}
                                     </td>
                                     <td style={{ padding: '14px 16px', fontSize: '13px', color: '#374151' }}>
-                                        {student.semesterId?.name || '—'}
+                                        {student.semesterId?.name || <span style={{ color: '#9ca3af', fontStyle: 'italic' }}>Pending</span>}
                                     </td>
                                     <td style={{ padding: '14px 16px', fontSize: '13px', color: '#374151' }}>
-                                        {student.feeStructureId?.name || '—'}
+                                        {student.feeStructureId?.name || <span style={{ color: '#9ca3af', fontStyle: 'italic' }}>Not Assigned</span>}
                                     </td>
                                     <td style={{ padding: '14px 16px' }}>
                                         <button 
@@ -431,7 +431,7 @@ export default function StudentList() {
                                     </div>
                                     <div style={{ background: '#f9fafb', padding: '16px', borderRadius: '12px', border: '1px solid #f3f4f6' }}>
                                         <p style={{ fontSize: '12px', color: '#6b7280', margin: '0 0 4px' }}>Semester</p>
-                                        <p style={{ fontSize: '15px', fontWeight: 600, color: '#111827', margin: 0 }}>{selectedStudent.semesterId?.name || 'N/A'}</p>
+                                        <p style={{ fontSize: '15px', fontWeight: 600, color: '#111827', margin: 0 }}>{selectedStudent.semesterId?.name || 'Pending Assignment'}</p>
                                     </div>
                                     <div style={{ background: '#f9fafb', padding: '16px', borderRadius: '12px', border: '1px solid #f3f4f6', gridColumn: 'span 2' }}>
                                         <p style={{ fontSize: '12px', color: '#6b7280', margin: '0 0 4px' }}>Admission Date</p>
@@ -578,7 +578,7 @@ export default function StudentList() {
                                         <div style={{ display: 'flex', justifyContent: 'space-between', padding: '16px', background: '#f9fafb', borderRadius: '12px', border: '1px solid #f3f4f6' }}>
                                             <div>
                                                 <p style={{ fontSize: '12px', color: '#6b7280', margin: '0 0 4px' }}>Assigned Package</p>
-                                                <p style={{ fontSize: '14px', fontWeight: 600, color: '#111827', margin: 0 }}>{selectedStudent.feeStructureId?.name || 'N/A'}</p>
+                                                <p style={{ fontSize: '14px', fontWeight: 600, color: '#111827', margin: 0 }}>{selectedStudent.feeStructureId?.name || 'Not Configured'}</p>
                                             </div>
                                             <div style={{ textAlign: 'right' }}>
                                                 <p style={{ fontSize: '12px', color: '#6b7280', margin: '0 0 4px' }}>Base Amount</p>

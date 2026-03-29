@@ -101,9 +101,9 @@ export default function ManageFees() {
                                             {activeTab === 'semesters' &&
                                                 `${new Date(item.startDate).toLocaleDateString('en-IN')} → ${new Date(item.endDate).toLocaleDateString('en-IN')}`}
                                             {activeTab === 'fees' &&
-                                                `Total: ₹${Number(item.totalAmount).toLocaleString('en-IN')} · Semester: ${item.semesterId?.name || 'N/A'}`}
+                                                `Total: ₹${Number(item.totalAmount).toLocaleString('en-IN')} · Semester: ${item.semesterId?.name || 'General'}`}
                                             {activeTab === 'installments' &&
-                                                `Linked to: ${item.feeStructureId?.name || 'N/A'}`}
+                                                `Linked to: ${item.feeStructureId?.name || 'Standalone'}`}
                                         </p>
                                     </div>
                                 </div>

@@ -116,7 +116,7 @@ export default function StudentFees() {
                 <div style={{ display: 'flex', padding: '16px 24px', background: '#faf9ff', gap: '40px', borderBottom: '1px solid #f3f4f6' }}>
                     <div>
                         <p style={{ fontSize: '11px', color: '#9ca3af', margin: 0 }}>PLAN</p>
-                        <p style={{ fontSize: '13px', fontWeight: 600, color: '#374151', margin: '3px 0 0' }}>{student.installmentPlanId?.name || 'N/A'}</p>
+                        <p style={{ fontSize: '13px', fontWeight: 600, color: '#374151', margin: '3px 0 0' }}>{student.installmentPlanId?.name || 'Full / One-time Payment'}</p>
                     </div>
                     <div>
                         <p style={{ fontSize: '11px', color: '#9ca3af', margin: 0 }}>INSTALLMENTS</p>

@@ -1,5 +1,8 @@
 const User = require('../models/User');
 const Student = require('../models/Student');
+const Semester = require('../models/Semester');
+const FeeStructure = require('../models/FeeStructure');
+const InstallmentPlan = require('../models/InstallmentPlan');
 const jwt = require('jsonwebtoken');
 
 const signToken = (id) => {
@@ -163,6 +166,93 @@ exports.updatePassword = async (req, res) => {
 
         // 4) Log user in, send JWT
         createSendToken(user, 200, res);
+    } catch (err) {
+        res.status(400).json({ status: 'fail', message: err.message });
+    }
+};
+
+exports.seedProduction = async (req, res) => {
+    try {
+        // Clear existing data
+        await User.deleteMany({});
+        await Semester.deleteMany({});
+        await FeeStructure.deleteMany({});
+        await InstallmentPlan.deleteMany({});
+        await Student.deleteMany({});
+
+        // 1. Create Admin
+        await User.create({
+            name: 'Admin User',
+            email: 'admin@college.com',
+            password: 'adminpassword',
+            role: 'admin'
+        });
+
+        // 2. Create Semesters
+        const semesters = [];
+        const today = new Date();
+        for (let i = 1; i <= 8; i++) {
+            const startDate = new Date(today);
+            startDate.setMonth(today.getMonth() + (i - 1) * 6);
+            const endDate = new Date(startDate);
+            endDate.setMonth(startDate.getMonth() + 6);
+            const sem = await Semester.create({
+                name: `Semester ${i}`,
+                startDate: startDate,
+                endDate: endDate,
+                isActive: i === 1
+            });
+            semesters.push(sem);
+        }
+
+        // 3. Create Fee Structures
+        const departments = ['CSE', 'ECE', 'MECH', 'CIVIL'];
+        const feeStructures = [];
+        for (const sem of semesters) {
+            for (const dept of departments) {
+                const fee = await FeeStructure.create({
+                    name: `B.Tech ${dept} - ${sem.name} Fee`,
+                    semesterId: sem._id,
+                    totalAmount: dept === 'CSE' ? 85000 : 75000,
+                    isActive: true
+                });
+                feeStructures.push(fee);
+            }
+        }
+
+        // 4. Create Installment Plan for CSE
+        const cseFee = feeStructures[0];
+        const standardPlan = await InstallmentPlan.create({
+            name: 'Standard 2-Part Payment',
+            feeStructureId: cseFee._id,
+            totalAmount: cseFee.totalAmount,
+            installments: [
+                { sequence: 1, amountPercentage: 50, dueDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000) },
+                { sequence: 2, amountPercentage: 50, dueDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000) }
+            ]
+        });
+
+        // 5. Create Student User
+        const studentUser = await User.create({
+            name: 'John Student',
+            email: 'student@college.com',
+            password: 'studentpassword',
+            role: 'student'
+        });
+
+        // 6. Link Student Data
+        await Student.create({
+            user: studentUser._id,
+            rollNumber: 'CSE-101',
+            semesterId: semesters[0]._id,
+            feeStructureId: cseFee._id,
+            installmentPlanId: standardPlan._id
+        });
+
+        res.status(200).json({
+            status: 'success',
+            message: 'Production database seeded successfully! You can now log in.'
+        });
     } catch (err) {
         res.status(400).json({ status: 'fail', message: err.message });
     }

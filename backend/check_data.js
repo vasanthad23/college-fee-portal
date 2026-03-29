@@ -4,29 +4,24 @@ const path = require('path');
 
 dotenv.config({ path: path.join(__dirname, '.env') });
 
-const Semester = require('./models/Semester');
-const FeeStructure = require('./models/FeeStructure');
-const InstallmentPlan = require('./models/InstallmentPlan');
-
-async function debug() {
+async function check() {
     try {
         await mongoose.connect(process.env.MONGO_URI);
         
+        const Semester = require('./models/Semester');
+        const FeeStructure = require('./models/FeeStructure');
+        const InstallmentPlan = require('./models/InstallmentPlan');
+
         const activeSemester = await Semester.findOne({ isActive: true });
-        console.log('ACTIVE SEMESTER:', activeSemester ? activeSemester.name : 'NONE');
+        console.log('ACTIVE SEMESTER:', JSON.stringify(activeSemester, null, 2));
 
         if (activeSemester) {
             const depts = await FeeStructure.find({ semesterId: activeSemester._id });
-            console.log(`FOUND ${depts.length} DEPARTMENTS IN ACTIVE SEMESTER.`);
+            console.log('CURRENT DEPARTMENTS:', JSON.stringify(depts, null, 2));
 
             for (const dept of depts) {
                 const plans = await InstallmentPlan.find({ feeStructureId: dept._id });
-                console.log(`- [${dept._id}] ${dept.name} (Amount: ${dept.totalAmount})`);
-                if (plans.length > 0) {
-                    plans.forEach(p => console.log(`  * PLAN: ${p.name} (${p.installments.length} installments)`));
-                } else {
-                    console.log(`  * NO PLANS FOUND`);
-                }
+                console.log(`PLANS FOR ${dept.name}:`, JSON.stringify(plans, null, 2));
             }
         }
 
@@ -38,4 +33,4 @@ async function debug() {
     }
 }
 
-debug();
+check();

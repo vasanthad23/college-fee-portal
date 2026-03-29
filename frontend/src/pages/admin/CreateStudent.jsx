@@ -254,26 +254,11 @@ export default function CreateStudent() {
                                 <option value="NOT_APPLICABLE">Not Applicable</option>
                                 <option value="NO">No (Full Payment)</option>
                                 
-                                {/* Prioritized Standard Plans */}
-                                {installmentPlans.find(p => p.name === 'Standard 2-Part Payment') && (
-                                    <option value={installmentPlans.find(p => p.name === 'Standard 2-Part Payment')._id}>
-                                        Standard 2 Part Payment
-                                    </option>
-                                )}
-                                {installmentPlans.find(p => p.name === 'Standard 3-Part Payment') && (
-                                    <option value={installmentPlans.find(p => p.name === 'Standard 3-Part Payment')._id}>
-                                        Standard 3 Part Payment
-                                    </option>
-                                )}
+                                {installmentPlans.length > 0 && <option disabled>────────── AVAILABLE PLANS ──────────</option>}
                                 
-                                {installmentPlans.length > 0 && <option disabled>──────────</option>}
-
-                                {installmentPlans
-                                    .filter(p => p.name !== 'Standard 2-Part Payment' && p.name !== 'Standard 3-Part Payment')
-                                    .map(plan => (
-                                        <option key={plan._id} value={plan._id}>{plan.name}</option>
-                                    ))
-                                }
+                                {installmentPlans.map(plan => (
+                                    <option key={plan._id} value={plan._id}>{plan.name}</option>
+                                ))}
                             </select>
                         </div>
                     </div>

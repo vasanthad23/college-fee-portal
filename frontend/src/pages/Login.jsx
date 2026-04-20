@@ -21,6 +21,11 @@ export default function Login() {
                 navigate('/student');
             }
         } catch (err) {
+            if (!err.response) {
+                setError('Cannot reach the server. Check the backend URL and CORS settings.');
+                return;
+            }
+
             setError(err.response?.data?.message || 'Invalid email or password');
         }
     };

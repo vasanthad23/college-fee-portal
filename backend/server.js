@@ -7,13 +7,36 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
+const configuredOrigins = (process.env.CLIENT_URL || '')
+  .split(',')
+  .map(origin => origin.trim())
+  .filter(Boolean);
+
+const allowedOrigins = new Set([
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  ...configuredOrigins
+]);
+
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    const isVercelDeployment = /^https:\/\/.*\.vercel\.app$/i.test(origin);
+    if (allowedOrigins.has(origin) || isVercelDeployment) {
+      return callback(null, true);
+    }
+
+    return callback(new Error(`Origin ${origin} not allowed by CORS`));
+  },
+  credentials: true
+};
 
 // Middleware
 app.use(express.json());
-app.use(cors({
-  origin: process.env.CLIENT_URL ? process.env.CLIENT_URL.split(',') : 'http://localhost:5173',
-  credentials: true
-}));
+app.use(cors(corsOptions));
 app.use(cookieParser());
 
 // Database Connection

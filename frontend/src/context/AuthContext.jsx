@@ -21,8 +21,12 @@ export const AuthProvider = ({ children }) => {
         const res = await api.post('/auth/login', { email, password });
         if (res.data.status === 'success') {
             const userData = res.data.data.user;
+            const token = res.data.token;
             setUser(userData);
             localStorage.setItem('user', JSON.stringify(userData));
+            if (token) {
+                localStorage.setItem('token', token);
+            }
             return userData;
         }
     };
@@ -35,6 +39,7 @@ export const AuthProvider = ({ children }) => {
         }
         setUser(null);
         localStorage.removeItem('user');
+        localStorage.removeItem('token');
         window.location.href = '/login'; // Force clear all app state and start fresh
     };
 

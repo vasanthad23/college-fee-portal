@@ -12,7 +12,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: CLIENT_URL
-        value: https://college-fee-frontend.onrender.com
+        value: https://college-fee-frontend.onrender.com,https://college-fee-portal-olive.vercel.app,http://localhost:5173
       - key: PORT
         value: 5000
 
@@ -25,4 +25,4 @@ services:
     staticPublishPath: frontend/dist
     envVars:
       - key: VITE_API_URL
-        value: https://college-fee-backend.onrender.com/api
+        value: https://college-fee-portal.onrender.com/api

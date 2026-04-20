@@ -26,10 +26,10 @@ export default function AdminRequests() {
         fetchRequests();
     }, []);
 
-    const handleUpdateStatus = async (id, status, installmentType = null) => {
+    const handleUpdateStatus = async (id, status) => {
         setProcessingId(id);
         try {
-            await api.patch(`/requests/${id}`, { status, installmentType });
+            await api.patch(`/requests/${id}`, { status });
             fetchRequests();
             if (selectedRequest?._id === id) setSelectedRequest(null);
         } catch (err) {
@@ -168,22 +168,18 @@ export default function AdminRequests() {
                             {selectedRequest.status === 'PENDING' && (
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px' }}>
                                     {selectedRequest.type === 'INSTALLMENT' ? (
-                                        <div style={{ display: 'flex', gap: '12px' }}>
+                                        <>
+                                            <div style={{ padding: '12px', background: '#f8fafc', borderRadius: '8px', border: '1px solid #e5e7eb', fontSize: '12px', color: '#475569' }}>
+                                                Approving this request will no longer auto-split the fee into 2-part or 3-part payments.
+                                            </div>
                                             <button
-                                                onClick={() => handleUpdateStatus(selectedRequest._id, 'APPROVED', '2-Part')}
+                                                onClick={() => handleUpdateStatus(selectedRequest._id, 'APPROVED')}
                                                 disabled={processingId === selectedRequest._id}
-                                                style={{ flex: 1, padding: '12px', background: '#10b981', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', fontSize: '13px' }}
+                                                style={{ width: '100%', padding: '12px', background: '#10b981', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}
                                             >
-                                                <CheckCircle size={18} /> Approve (2-Part)
+                                                <CheckCircle size={18} /> Approve Request
                                             </button>
-                                            <button
-                                                onClick={() => handleUpdateStatus(selectedRequest._id, 'APPROVED', '3-Part')}
-                                                disabled={processingId === selectedRequest._id}
-                                                style={{ flex: 1, padding: '12px', background: '#059669', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', fontSize: '13px' }}
-                                            >
-                                                <CheckCircle size={18} /> Approve (3-Part)
-                                            </button>
-                                        </div>
+                                        </>
                                     ) : (
                                         <button
                                             onClick={() => handleUpdateStatus(selectedRequest._id, 'APPROVED')}

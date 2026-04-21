@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Users, CreditCard, LogOut, Settings, Bell, FileText, Archive } from 'lucide-react';
+import { LayoutDashboard, Users, CreditCard, LogOut, Settings, Bell, FileText, Archive, BellRing } from 'lucide-react';
 import api from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 
@@ -34,6 +34,7 @@ export default function AdminLayout() {
         { name: 'Manage Fees', path: '/admin/fees', icon: CreditCard },
         { name: 'Payment History', path: '/admin/history', icon: FileText },
         { name: 'Requests', path: '/admin/requests', icon: Archive },
+        { name: 'Fee Reminders', path: '/admin/reminders', icon: BellRing },
         { name: 'Settings', path: '/admin/settings', icon: Settings },
     ];
 

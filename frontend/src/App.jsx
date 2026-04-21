@@ -17,6 +17,7 @@ import StudentHistory from './pages/student/StudentHistory';
 import StudentRequests from './pages/student/StudentRequests';
 import AdminRequests from './pages/admin/AdminRequests';
 import Settings from './pages/shared/Settings';
+import FeeReminders from './pages/admin/FeeReminders';
 
 export default function App() {
   return (
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="installments/new" element={<CreateInstallmentPlan />} />
           <Route path="history" element={<AdminPaymentHistory />} />
           <Route path="requests" element={<AdminRequests />} />
+          <Route path="reminders" element={<FeeReminders />} />
           <Route path="settings" element={<Settings />} />
         </Route>
 

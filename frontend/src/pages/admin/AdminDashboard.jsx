@@ -155,7 +155,31 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Pending Due Sidebar */}
-                <div style={{ flex: 1, background: '#fff', borderRadius: '16px', padding: '20px', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', border: '1px solid #f0f0f0' }}>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    <div
+                        onClick={() => navigate('/admin/reminders')}
+                        style={{
+                            background: 'linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%)',
+                            borderRadius: '16px',
+                            padding: '20px',
+                            boxShadow: '0 10px 24px rgba(91,33,182,0.22)',
+                            color: '#ffffff',
+                            cursor: 'pointer'
+                        }}
+                    >
+                        <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', margin: 0, opacity: 0.78 }}>
+                            Smart Reminders
+                        </p>
+                        <h2 style={{ fontSize: '20px', fontWeight: 800, margin: '8px 0 8px' }}>Run Fee Reminder Check</h2>
+                        <p style={{ fontSize: '13px', lineHeight: 1.5, margin: 0, opacity: 0.92 }}>
+                            Open the reminder page to trigger the backend reminder engine and review generated alerts.
+                        </p>
+                        <div style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 14px', borderRadius: '12px', background: 'rgba(255,255,255,0.14)', fontSize: '12px', fontWeight: 700 }}>
+                            Open Reminder Console
+                        </div>
+                    </div>
+
+                    <div style={{ background: '#fff', borderRadius: '16px', padding: '20px', boxShadow: '0 1px 4px rgba(0,0,0,0.06)', border: '1px solid #f0f0f0' }}>
                     <h2 style={{ fontSize: '15px', fontWeight: 700, color: '#111827', margin: '0 0 4px' }}>Pending Due Reminder</h2>
                     <p style={{ fontSize: '12px', color: '#7c3aed', fontWeight: 600, margin: '0 0 20px' }}>Today</p>
 
@@ -194,6 +218,7 @@ export default function AdminDashboard() {
                             </div>
                             <span style={{ fontSize: '12px', fontWeight: 600, color: '#111827' }}>{fmt(stats.pending)}</span>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

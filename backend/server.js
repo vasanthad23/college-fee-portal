@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
+const cron = require('node-cron');
+const { checkAndSendReminders } = require('./services/reminderService');
 
 dotenv.config();
 
@@ -44,6 +46,16 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.error('MongoDB Connection Error:', err));
 
+cron.schedule('0 9 * * *', async () => {
+  try {
+    await checkAndSendReminders();
+  } catch (error) {
+    console.error('Reminder scheduler failed:', error);
+  }
+});
+
+console.log('Smart fee reminder scheduler started');
+
 // Routes
 app.get('/', (req, res) => {
   res.send('College Fee Management System API is running');
@@ -56,6 +68,7 @@ const installmentPlanRoutes = require('./routes/installmentPlanRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const requestRoutes = require('./routes/requestRoutes');
+const reminderRoutes = require('./routes/reminderRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/semesters', semesterRoutes);
@@ -64,6 +77,7 @@ app.use('/api/installment-plans', installmentPlanRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/requests', requestRoutes);
+app.use('/api/reminders', reminderRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

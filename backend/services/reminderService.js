@@ -44,7 +44,7 @@ async function checkAndSendReminders(currentDate = new Date()) {
         isInstallmentEnabled: true,
         installmentPlanId: { $ne: null }
     })
-        .select('_id rollNumber installmentPlanId feeStructureId additionalFees')
+        .select('_id rollNumber installmentPlanId feeStructureId additionalFees user')
         .populate({
             path: 'installmentPlanId',
             select: 'totalAmount installments'
@@ -52,6 +52,10 @@ async function checkAndSendReminders(currentDate = new Date()) {
         .populate({
             path: 'feeStructureId',
             select: 'totalAmount'
+        })
+        .populate({
+            path: 'user',
+            select: 'name email'
         })
         .lean();
 
@@ -81,6 +85,8 @@ async function checkAndSendReminders(currentDate = new Date()) {
 
     for (const student of students) {
         const studentIdentifier = student.rollNumber || student._id.toString();
+        const studentName = student.user?.name || 'Unknown Student';
+        const studentEmail = student.user?.email || '';
         const installments = student.installmentPlanId?.installments || [];
         const studentPayments = paymentsByStudent.get(student._id.toString()) || [];
         const totalAdditionalFees = (student.additionalFees || []).reduce((sum, fee) => sum + Number(fee.amount || 0), 0);
@@ -123,6 +129,8 @@ async function checkAndSendReminders(currentDate = new Date()) {
 
             reminders.push({
                 studentId: studentIdentifier,
+                studentName,
+                studentEmail,
                 installmentId: installment._id.toString(),
                 dueDate: installment.dueDate,
                 paymentStatus,
